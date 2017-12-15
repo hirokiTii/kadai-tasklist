@@ -1,25 +1,29 @@
-<h1>全タスクリスト一覧</h1>
+<% if logged_in? %>
+  <p>ログイン完了ユーザ:<%= current_user.name %></p>
+  <h1>全タスクリスト一覧</h1>
 
-<% if @tasks.any? %>
-    <table class = "table table-striped">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>進行状況</th>
-                <th>タスク</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @tasks.each do |task| %>
-                <tr>
-                    <td><%= link_to task.id, task %></td>
-                    <td><%= task.status %></td>
-                    <td><%= task.content %></td>
-                </tr>
-            <% end %>
-        </tbody>
-    </table>
+        <% if @tasks.any? %>
+            <table class = "table table-striped">
+                <thead>
+                    <tr>
+                        <th>進行状況</th>
+                        <th>タスク</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @tasks.each do |task| %>
+                        <tr>
+                            <td><%= task.status %></td>
+                            <td><%= link_to task.content, task %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        
+        <% end %>
 
+    <%= link_to '新規タスクの登録', new_task_path, class: "btn btn-primary" %>
+<% else %>
+  <%= redirect_to login_url %>
 <% end %>
 
-<%= link_to '新規タスクの登録', new_task_path, class: "btn btn-primary" %>
